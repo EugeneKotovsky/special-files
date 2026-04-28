@@ -21,8 +21,8 @@ public class CsvToJsonConverter {
         String jsonFile = "data.json";
 
         List<Employee> list = parseCSV(columnMapping, csvFile);
-        String json = listToJson(list);
-        writeString(json, jsonFile);
+        String json = JsonHelper.listToJson(list);
+        JsonHelper.writeString(json, jsonFile);
     }
 
     private static List<Employee> parseCSV(String[] columnMapping, String fileName) {
@@ -43,21 +43,4 @@ public class CsvToJsonConverter {
         }
     }
 
-    private static String listToJson(List<Employee> list) {
-        Type listType = new TypeToken<List<Employee>>() {
-        }.getType();
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
-        return gson.toJson(list, listType);
-    }
-
-    private static void writeString(String data, String fileName) {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.write(data);
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
